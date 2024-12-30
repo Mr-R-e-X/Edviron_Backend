@@ -49,7 +49,7 @@ export class AuthService {
 
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
         maxAge: 1000 * 60 * 60 * 24,
         sameSite: 'none',
       });
@@ -69,18 +69,14 @@ export class AuthService {
 
   async loginSchool(loginAdminDto: LoginAdminDto, res: Response) {
     try {
-      console.log('Login request received for school admin');
-
       const schoolAdmin = await this.schoolAdminModel.findOne({
         email: loginAdminDto.email,
       });
       if (!schoolAdmin) {
-        console.log('School admin not found');
         return res.status(404).json({ message: 'School admin not found' });
       }
 
       if (!comparePassword(loginAdminDto.password, schoolAdmin.password)) {
-        console.log('Incorrect password');
         return res.status(400).json({ message: 'Incorrect password' });
       }
 
@@ -92,11 +88,9 @@ export class AuthService {
       const secret = this.configService.get<string>('JWT_SECRET');
       const token = this.jwtService.sign(payload, { secret });
 
-      console.log('Token generated:', token);
-
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
         maxAge: 1000 * 60 * 60 * 24,
         sameSite: 'none',
       });
@@ -137,14 +131,12 @@ export class AuthService {
         _id: new Types.ObjectId(createSchoolAdminDto.school_id),
       });
       if (!school) {
-        console.log('School not found');
         return null;
       }
       const existsAdmin = await this.schoolAdminModel.findOne({
         email: createSchoolAdminDto.email,
       });
       if (existsAdmin) {
-        console.log('School admin already exists');
         return null;
       }
 
@@ -166,7 +158,7 @@ export class AuthService {
     try {
       res.clearCookie('token', {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
         sameSite: 'none',
       });
 

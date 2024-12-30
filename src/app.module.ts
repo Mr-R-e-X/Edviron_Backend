@@ -27,8 +27,5 @@ import { AuthModule } from './auth/auth.module';
   providers: [AppService, SchoolService],
 })
 export class AppModule {
-  constructor() {
-    console.log('MONGODB_URI:', process.env.MONGODB_URI); // Check if MONGODB_URI is loaded
-    console.log('JWT_SECRET:', process.env.JWT_SECRET); // Check if JWT_SECRET is loaded
-  }
+  constructor() {}
 }

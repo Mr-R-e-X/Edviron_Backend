@@ -51,6 +51,7 @@ export class AuthService {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         maxAge: 1000 * 60 * 60 * 24,
+        sameSite: 'none',
       });
 
       return res.status(200).json({
@@ -97,6 +98,7 @@ export class AuthService {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         maxAge: 1000 * 60 * 60 * 24,
+        sameSite: 'none',
       });
 
       return res.status(200).json({
@@ -165,6 +167,7 @@ export class AuthService {
       res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
+        sameSite: 'none',
       });
 
       return res.status(200).json({ message: 'Logout successful' });
